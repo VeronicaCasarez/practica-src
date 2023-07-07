@@ -5,12 +5,12 @@ import ProductManager from "./productsManager.js"
 const app=express();
 const productManager=new ProductManager("../products.json");
 
-const PORT=3000;
+const PORT=8080;
 
 app.get("/products", async (req,res)=>{
     try{
         const limit=req.query.limit;
-        const products=await ProductManager.getProducts();
+        const products=await productManager.getProducts();
        
         if(limit){
             res.json(products.slice(0,limit))
@@ -28,5 +28,5 @@ app.get("/products", async (req,res)=>{
 
 
 app.listen (PORT,()=>{
-    console.log ("servidor escuchando en el puerto: ${PORT}")
+    console.log (`servidor escuchando en el puerto: ${PORT}`)
 });
