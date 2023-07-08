@@ -4,8 +4,9 @@ class ProductManager {
   static productId = 1;
 
   constructor(path) {
+    this.path=path;
     this.products = [];
-    this.path = path;
+    
   }
 
   async addProduct(product) {
@@ -28,28 +29,27 @@ class ProductManager {
       const products = await this.readDataFromFile();
       return products;
     } catch (err) {
-      console.log(err);
+     
       return [];
     }
   }
 
-  async getProductById(id) {
+  async getProductById(productId) {
+      
     try {
       const products = await this.readDataFromFile();
-      const productFind = products.find((product) => product.id === id);
-      if (!productFind) {
-        console.log("Producto no encontrado");
-      } else {
-        console.log("Producto encontrado:", productFind);
-      }
+   
+      const productFind = products.find((product) => product.id === productId);
+      return productFind;
     } catch (err) {
-      console.log(err);
+      res.json({message:"no funciono get product by id"})
     }
   }
 
   async updateProduct(id, updatedFields) {
     try {
       const products = await this.readDataFromFile();
+     
       const productIndex = products.findIndex((product) => product.id === id);
 
       if (productIndex !== -1) {
@@ -82,20 +82,24 @@ class ProductManager {
 
   async readDataFromFile() {
     try {
+      
       const data = await fs.promises.readFile(this.path, "utf-8");
+      
       return JSON.parse(data);
     } catch (err) {
       return [];
     }
   }
 
+  
+
   async writeDataToFile(data) {
     try {
-      await fs.promises.writeFile(this.path, JSON.stringify(data), "utf-8");
+      await fs.promises.writeFile(this.filePath, JSON.stringify(data), "utf-8");
     } catch (err) {
       console.log(err);
     }
   }
 }
-export default ProductManager;
+export default  ProductManager;
 
