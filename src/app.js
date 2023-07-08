@@ -54,7 +54,7 @@ app.get("/products/:pid", async (req,res)=>{
     try{
         let productId=req.params.pid;
         
-        const products=await productManager.getProductById(productId);
+        const products=await productManager.getProductById(parseInt(productId));
         
         if (products) {
         res.json(products);
